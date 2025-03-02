@@ -1,0 +1,70 @@
+<div class="courses-container">
+  <div class="header-section">
+    <h1>{{ currentCategoryId ? getCategoryName(currentCategoryId) : 'All Courses' }}</h1>
+    <button class="create-course-button" (click)="openCreateCourseDialog()">
+      <i class="fa fa-plus-circle"></i> Create Course
+    </button>
+
+    <!-- Search Bar -->
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search Courses" (input)="onSearchChange()" class="search-bar" />
+  </div>
+
+  <div *ngIf="courses.length === 0" class="empty-state">
+    <i class="fa fa-graduation-cap empty-icon"></i>
+    <h3>No courses available</h3>
+    <p *ngIf="currentCategoryId">Try creating a new course in this category</p>
+    <p *ngIf="!currentCategoryId">Start by creating a new course</p>
+  </div>
+
+  <div class="course-grid">
+    <div *ngFor="let course of paginatedCourses" class="course-card" (click)="confirmDownload(course)">
+      <img [src]="'http://localhost:8080/api/images/' + course.image" 
+           alt="{{ course.title }}" class="course-image">
+
+      <div class="difficulty-badge" [ngClass]="course.difficultyLevel.toLowerCase()">
+        {{ course.difficultyLevel }}
+      </div>
+
+      <div class="course-content">
+        <div class="course-header">
+          <h2 class="course-title">{{ course.title }}</h2>
+          <span class="category-tag" (click)="navigateToCategory(course.category.id)">
+            {{ course.category.name }}
+          </span>
+        </div>
+
+        <p class="instructor">{{ course.instructor }}</p>
+        <p class="description">{{ course.description }}</p>
+
+        <!-- Rating Section -->
+        <div class="rating" (click)="$event.stopPropagation()">
+          <span *ngFor="let star of [1, 2, 3, 4, 5]" 
+                class="star" 
+                [class.filled]="star <= (ratingCache[course.id!] || 0)"
+                (click)="rateCourse(course, star)">
+            ★
+          </span>
+        </div>
+
+        <div class="action-bar">
+          <button class="edit-button" *ngIf="!!course.pdfFileName" (click)="sendMail(course); $event.stopPropagation()">
+            <i class="fa-solid fa-paper-plane" style="font-size:24px; color:orange"></i>
+          </button>
+          <button class="edit-button" title="Download PDF" (click)="openUpdateCourseDialog(course); $event.stopPropagation()">
+            <i class="fa fa-pencil" style="font-size:24px"></i>
+          </button>
+          <button class="delete-button" (click)="deleteCourse(course.category.id, course.id); $event.stopPropagation()">
+            <i class="fa fa-trash-o" style="font-size:24px; color:red"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
