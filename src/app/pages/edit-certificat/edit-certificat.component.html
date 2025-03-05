@@ -1,0 +1,45 @@
+<div class="container">
+    <h2 class="text-center my-4">Modifier le Certificat</h2>
+    <form (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="nom">Nom du certificat</label>
+        <input type="text" id="nom" [(ngModel)]="certificat.nom" name="nom" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="dateObtention">Date d'obtention</label>
+        <input type="date" id="dateObtention" [(ngModel)]="certificat.dateObtention" name="dateObtention" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="scoreObtenu">Score obtenu</label>
+        <input type="number" id="scoreObtenu" [(ngModel)]="certificat.scoreObtenu" name="scoreObtenu" class="form-control" required min="0" />
+      </div>
+
+      <div class="form-group">
+        <label for="scoreMin">Score minimum</label>
+        <input type="number" id="scoreMin" [(ngModel)]="certificat.scoreMin" name="scoreMin" class="form-control" required min="0" />
+      </div>
+
+      <div class="form-group">
+        <label for="utilisateurId">Utilisateur</label>
+        <select id="utilisateurId" [(ngModel)]="certificat.utilisateur" name="utilisateurId" class="form-control" required>
+          <option *ngFor="let utilisateur of utilisateurs" [ngValue]="utilisateur">
+            {{ utilisateur.nom }} (ID: {{ utilisateur.id }})
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="testId">Test associé</label>
+        <select id="testId" [(ngModel)]="certificat.test" name="testId" class="form-control" required>
+          <option *ngFor="let test of tests" [ngValue]="test">
+            {{ test.titre }} (ID: {{ test.id }})
+          </option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block mt-3">Enregistrer</button>
+    </form>
+</div>

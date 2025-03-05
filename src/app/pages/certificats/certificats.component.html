@@ -1,0 +1,66 @@
+<div class="container">
+  <h2>Liste des Certificats</h2>
+
+  <!-- Barre de recherche avec icône -->
+  <div class="form-group mb-4 d-flex align-items-center">
+    <label for="searchNom" class="mr-2">Rechercher par nom</label>
+    <div class="input-group">
+      <input
+        type="text"
+        id="searchNom"
+        [(ngModel)]="searchNom"
+        name="searchNom"
+        class="form-control"
+        (input)="searchCertificatByName()"
+        placeholder="Entrez le nom du certificat"
+        style="border-radius: 20px; padding-left: 40px;" 
+      />
+      <div class="input-group-prepend">
+        <span class="input-group-text" style="background-color: #007bff; border-radius: 20px 0 0 20px;">
+          <i class="fa fa-search" style="color: white;"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  
+  <table class="table table-bordered mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>Nom</th>
+        <th>Date d'obtention</th>
+        <th>Score obtenu</th>
+        <th>Score minimum</th>
+        <th>Utilisateur</th>
+        <th>Test</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let certificat of filteredCertificats">
+        <td>{{ certificat.nom }}</td>
+        <td>{{ certificat.dateObtention | date:'dd/MM/yyyy' }}</td>
+        <td>{{ certificat.scoreObtenu }}</td>
+        <td>{{ certificat.scoreMin }}</td>
+        <td>{{ certificat.utilisateur?.id || 'Non défini' }}</td>
+        <td>{{ certificat.test?.titre || 'Non défini' }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" (click)="editCertificat(certificat.id)">
+            Modifier
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="deleteCertificat(certificat.id)">
+            Supprimer
+          </button>
+          <button class="btn btn-primary btn-sm" (click)="generatePdf(certificat)">
+            Télécharger PDF
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Lien pour ajouter un certificat -->
+  <div class="text-center mt-4">
+    <a routerLink="/add-certificat" class="btn btn-success">Ajouter un Certificat</a>
+  </div>
+</div>

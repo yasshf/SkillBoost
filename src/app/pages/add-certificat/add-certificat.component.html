@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>Ajouter un Certificat</h2>
+    
+    <form [formGroup]="addCertificatForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label>Nom du certificat</label>
+        <input type="text" formControlName="nom" class="form-control">
+        <div *ngIf="addCertificatForm.controls['nom'].invalid && addCertificatForm.controls['nom'].touched" class="text-danger">
+          Ce champ est requis.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label>Date d'obtention</label>
+        <input type="date" formControlName="dateObtention" class="form-control">
+        <div *ngIf="addCertificatForm.controls['dateObtention'].invalid && addCertificatForm.controls['dateObtention'].touched" class="text-danger">
+          Veuillez sélectionner une date valide.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label>Score obtenu</label>
+        <input type="number" formControlName="scoreObtenu" class="form-control">
+        <div *ngIf="addCertificatForm.controls['scoreObtenu'].invalid && addCertificatForm.controls['scoreObtenu'].touched" class="text-danger">
+          Le score ne peut pas être négatif.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label>Score minimum</label>
+        <input type="number" formControlName="scoreMin" class="form-control">
+        <div *ngIf="addCertificatForm.controls['scoreMin'].invalid && addCertificatForm.controls['scoreMin'].touched" class="text-danger">
+          Le score minimum ne peut pas être négatif.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label>Utilisateur</label>
+        <select formControlName="utilisateurId" class="form-control">
+          <option *ngFor="let utilisateur of utilisateurs" [value]="utilisateur.id">{{ utilisateur.id }}</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label>Test</label>
+        <select formControlName="testId" class="form-control">
+          <option *ngFor="let test of tests" [value]="test.id">{{ test.titre }}</option>
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="addCertificatForm.invalid">Créer</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,55 @@
+<div class="container">
+    <h2>Ajouter un Test</h2>
+  
+    <!-- Formulaire avec Reactive Forms -->
+    <form [formGroup]="testForm" (ngSubmit)="addTest()">
+      
+      <!-- Champ pour le Titre -->
+      <div class="form-group">
+        <label for="titre">Titre</label>
+        <input type="text" id="titre" class="form-control" formControlName="titre" />
+        <div *ngIf="formControls.titre.touched && formControls.titre.invalid" class="error">
+          <div *ngIf="formControls.titre.errors?.required">Le titre est requis.</div>
+          <div *ngIf="formControls.titre.errors?.minlength">Le titre doit comporter au moins 3 caractères.</div>
+        </div>
+      </div>
+  
+      <!-- Champ pour la Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" class="form-control" formControlName="description"></textarea>
+        <div *ngIf="formControls.description.touched && formControls.description.invalid" class="error">
+          <div *ngIf="formControls.description.errors?.required">La description est requise.</div>
+          <div *ngIf="formControls.description.errors?.minlength">La description doit comporter au moins 10 caractères.</div>
+        </div>
+      </div>
+  
+      <!-- Champ pour la Durée -->
+      <div class="form-group">
+        <label for="duration">Durée</label>
+        <input type="number" id="duration" class="form-control" formControlName="duration" />
+        <div *ngIf="formControls.duration.touched && formControls.duration.invalid" class="error">
+          <div *ngIf="formControls.duration.errors?.required">La durée est requise.</div>
+          <div *ngIf="formControls.duration.errors?.pattern">La durée doit être un nombre entier.</div>
+        </div>
+      </div>
+  
+      <!-- Champ pour le Niveau -->
+      <div class="form-group">
+        <label for="niveau">Niveau</label>
+        <select id="niveau" class="form-control" formControlName="niveau">
+          <option value="">Sélectionnez un niveau</option>
+          <option value="Débutant">Débutant</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Avancé">Avancé</option>
+        </select>
+        <div *ngIf="formControls.niveau.touched && formControls.niveau.invalid" class="error">
+          <div *ngIf="formControls.niveau.errors?.required">Le niveau est requis.</div>
+        </div>
+      </div>
+  
+      <!-- Bouton pour ajouter le test -->
+      <button type="submit" [disabled]="testForm.invalid" class="btn btn-primary">Ajouter le Test</button>
+    </form>
+  </div>
+  
