@@ -1,0 +1,150 @@
+<div class="signup-page">
+  <div class="signup-container">
+      <!-- Form Section -->
+      <div class="form-section">
+          <h3>Sign Up</h3>
+          <form (ngSubmit)="onSubmit(signupForm)" #signupForm="ngForm"> <!-- 👈 Pass signupForm here -->
+              <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input 
+                      type="text" 
+                      [(ngModel)]="user.firstName" 
+                      name="firstName" 
+                      class="form-control" 
+                      id="firstName" 
+                      placeholder="Enter your first name" 
+                      required 
+                      minlength="2"
+                      #firstName="ngModel">
+                  <div *ngIf="firstName.invalid && firstName.touched" class="error-message">
+                      First name is required (min 2 characters).
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input 
+                      type="text" 
+                      [(ngModel)]="user.lastName" 
+                      name="lastName" 
+                      class="form-control" 
+                      id="lastName" 
+                      placeholder="Enter your last name" 
+                      required 
+                      minlength="2"
+                      #lastName="ngModel">
+                  <div *ngIf="lastName.invalid && lastName.touched" class="error-message">
+                      Last name is required (min 2 characters).
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input 
+                      type="email" 
+                      [(ngModel)]="user.email" 
+                      name="email" 
+                      class="form-control" 
+                      id="email" 
+                      placeholder="Enter your email" 
+                      required 
+                      email 
+                      #email="ngModel">
+                  <div *ngIf="email.invalid && email.touched" class="error-message">
+                      Please enter a valid email address.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="password">Password</label>
+                  <input 
+                      type="password" 
+                      [(ngModel)]="user.password" 
+                      name="password" 
+                      class="form-control" 
+                      id="password" 
+                      placeholder="Enter your password" 
+                      required 
+                      minlength="6"
+                      pattern="^(?=.*[A-Z])(?=.*\d).{6,}$" 
+                      #password="ngModel">
+                  <div *ngIf="password.invalid && password.touched" class="error-message">
+                      <div *ngIf="password.errors?.['required']">Password is required.</div>
+                      <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters long.</div>
+                      <div *ngIf="password.errors?.['pattern']">Password must contain at least one uppercase letter and one number.</div>
+                  </div>
+              </div>
+
+              <!-- Date of Birth Input -->
+              <div class="form-group">
+                  <label for="dateNaissance">Date of Birth</label>
+                  <input 
+                      type="date" 
+                      [(ngModel)]="user.dateNaissance" 
+                      name="dateNaissance" 
+                      class="form-control" 
+                      id="dateNaissance" 
+                      required 
+                      #dateNaissance="ngModel">
+                  <div *ngIf="dateNaissance.invalid && dateNaissance.touched" class="error-message">
+                      Date of birth is required.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="pays">Country</label>
+                  <select 
+                      [(ngModel)]="user.country" 
+                      name="pays" 
+                      class="form-control" 
+                      id="pays" 
+                      required 
+                      #country="ngModel">
+                      <option value="Tunisia">Tunisia</option>  
+                      <option value="Algeria">Algeria</option>  
+                      <option value="Morocco">Morocco</option>  
+                      <option value="France">France</option>  
+                      <option value="USA">USA</option>  
+                      <option value="Canada">Canada</option>  
+                      <option value="Germany">Germany</option>  
+                      <option value="Italy">Italy</option>  
+                      <option value="Spain">Spain</option>  
+                      <option value="United Kingdom">United Kingdom</option>  
+                      <option value="Brazil">Brazil</option>  
+                      <option value="Argentina">Argentina</option>  
+                      <option value="Mexico">Mexico</option>  
+                      <option value="Japan">Japan</option>  
+                      <option value="South Korea">South Korea</option>  
+                      <option value="China">China</option>  
+                      <option value="India">India</option>  
+                      <option value="Australia">Australia</option>  
+                      <option value="Russia">Russia</option>  
+                      <option value="South Africa">South Africa</option>  
+                      <option value="Egypt">Egypt</option>  
+                      <option value="Turkey">Turkey</option>  
+                      <option value="Saudi Arabia">Saudi Arabia</option>  
+                      <option value="United Arab Emirates">United Arab Emirates</option>  
+                      <option value="Nigeria">Nigeria</option>  
+                      <option value="Pakistan">Pakistan</option>  
+                      <option value="Indonesia">Indonesia</option>  
+                      <option value="Malaysia">Malaysia</option>  
+                      <option value="Thailand">Thailand</option>  
+                      <option value="Vietnam">Vietnam</option>  
+                      
+                      
+                  </select>
+                  <div *ngIf="country.invalid && country.touched" class="error-message">
+                      Please select a country.
+                  </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Sign Up</button>
+          </form>
+      </div>
+
+      <!-- Image Section on the Right -->
+      <div class="image-section">
+          <img src="signup-image.png" alt="Sign Up Image">
+      </div>
+  </div>
+</div>

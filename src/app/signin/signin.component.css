@@ -1,0 +1,148 @@
+/* Center everything on the page */
+.signin-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f7fc;
+  }
+  
+  /* Main container with form & image */
+  .signin-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1400px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Left Side: Sign-in Form */
+  .form-container {
+    width: 35%;
+  }
+  
+  /* Sign-in Card */
+  .card {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background: #ffffff;
+  }
+  
+  /* Right Side: BIGGER Image */
+  .image-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .image-container img {
+    width: 100%; /* Make the image take full width */
+    max-height: 500px; /* Increase max height */
+    object-fit: cover; /* Ensure the image fills space properly */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .signin-container {
+      width: 95%;
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .form-container {
+      width: 100%;
+    }
+  
+    .image-container {
+      width: 100%;
+      justify-content: center;
+    }
+  
+    .image-container img {
+      max-width: 70%;
+      height: auto;
+    }
+  }
+  .btn-google {
+    background-color: #ffffff;
+    color: #757575;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .btn-google:hover {
+    background-color: #f8f8f8;
+  }
+  
+  .google-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  /* Google Button Styles */
+.btn-google {
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  color: #3c4043;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 24px;
+  width: 100%;
+  margin: 1rem 0;
+  transition: all 0.2s ease;
+}
+
+.btn-google:hover {
+  background: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-google img {
+  width: 20px;
+  height: 20px;
+}
+
+.separator {
+  margin: 1.5rem 0;
+  position: relative;
+  text-align: center;
+  color: #6b7280;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.separator::before {
+  left: 0;
+}
+
+.separator::after {
+  right: 0;
+}
+
+/* Loading Spinner */
+.spinner-border-sm {
+  margin-left: 8px;
+}

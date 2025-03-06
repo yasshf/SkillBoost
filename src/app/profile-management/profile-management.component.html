@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Profile Management - ECOURSES</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Profile Management Content Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Profile Management</h5>
+                <h1>Manage Your Profile</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="bg-secondary rounded p-5">
+                        <!-- Angular Reactive Form -->
+                        <form [formGroup]="profileForm" (ngSubmit)="updateUser()">
+                            <!-- First Name Field -->
+                            <div class="form-group mb-4">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control border-0 p-3" id="firstName" formControlName="firstName" />
+                                <!-- Validation Error Message -->
+                                <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" class="text-danger">
+                                    First Name is required.
+                                </div>
+                            </div>
+
+                            <!-- Last Name Field -->
+                            <div class="form-group mb-4">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control border-0 p-3" id="lastName" formControlName="lastName" />
+                                <!-- Validation Error Message -->
+                                <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="text-danger">
+                                    Last Name is required.
+                                </div>
+                            </div>
+
+                            <!-- Email Field (Disabled) -->
+                            <div class="form-group mb-4">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control border-0 p-3" id="email" formControlName="email"  />
+                            </div>
+
+                            <!-- Role Field -->
+                          
+
+                            <!-- Date of Birth Field -->
+                            <div class="form-group mb-4">
+                                <label for="dateNaissance">Date of Birth</label>
+                                <input type="date" class="form-control border-0 p-3" id="dateNaissance" formControlName="dateNaissance" />
+                            </div>
+
+                            <!-- Country Field -->
+                            <div class="form-group mb-4">
+                                <label for="country">Country</label>
+                                <select class="form-control border-0 p-3" id="country" formControlName="country">
+                                    <option value="" disabled selected>Select a country</option>
+                                    <option value="Tunisia">Tunisia</option>
+                                    <option value="Algeria">Algeria</option>
+                                    <option value="Morocco">Morocco</option>
+                                    <option value="France">France</option>
+                                    <option value="USA">USA</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Italy">Italy</option>
+                                    <option value="Spain">Spain</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Brazil">Brazil</option>
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Japan">Japan</option>
+                                    <option value="South Korea">South Korea</option>
+                                    <option value="China">China</option>
+                                    <option value="India">India</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Russia">Russia</option>
+                                    <option value="South Africa">South Africa</option>
+                                    <option value="Egypt">Egypt</option>
+                                    <option value="Turkey">Turkey</option>
+                                    <option value="Saudi Arabia">Saudi Arabia</option>
+                                    <option value="United Arab Emirates">United Arab Emirates</option>
+                                    <option value="Nigeria">Nigeria</option>
+                                    <option value="Pakistan">Pakistan</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Vietnam">Vietnam</option>
+                                </select>
+                            </div>
+                            
+
+                            <!-- New Password Field -->
+                            <div class="form-group mb-4">
+                                <label for="password">New Password</label>
+                                <input type="password" class="form-control border-0 p-3" id="password" formControlName="password" placeholder="Leave blank to keep current password" />
+                                <!-- Validation Error Message -->
+                                <div *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched" class="text-danger">
+                                    Password must be at least 6 characters long.
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button class="btn btn-primary py-3 px-5 w-100" type="submit" [disabled]="profileForm.invalid">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Profile Management Content End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
