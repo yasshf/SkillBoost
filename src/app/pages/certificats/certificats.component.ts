@@ -123,6 +123,10 @@ export class CertificatsComponent implements OnInit {
     // Télécharger le PDF
     doc.save(`certificat_${certificat.nom}.pdf`);
   }
+  // Pagination
+page: number = 1;
+pageSize: number = 4; // Nombre d'éléments par page
+
   
   
 }

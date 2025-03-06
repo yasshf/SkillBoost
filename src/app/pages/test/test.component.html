@@ -1,99 +1,110 @@
 <div class="container">
-    <h2 class="title">Liste des Tests</h2>
-    <th>
-        Titre 
-        <button class="btn btn-sm btn-secondary" (click)="sortByTitle()">
-          🔀 Trier
-        </button>
-      </th>
-      
-      
-    <!-- Bouton pour ajouter un test aligné à droite -->
-    <div class="mb-3 d-flex justify-content-end">
-      <a class="btn btn-primary" [routerLink]="['/add-test']">➕ Ajouter un Test</a>
+  <h2 class="title">Liste des Tests</h2>
+  <th>
+      Titre 
+      <button class="btn btn-sm btn-secondary" (click)="sortByTitle()">
+        🔀 Trier
+      </button>
+    </th>
+    
+    
+  <!-- Bouton pour ajouter un test aligné à droite -->
+  <div class="mb-3 d-flex justify-content-end">
+    <a class="btn btn-primary" [routerLink]="['/add-test']">➕ Ajouter un Test</a>
+  </div>
+<!-- Titre Statistiques -->
+<h3 class="mt-4 mb-3 text-center">📊 Statistiques des Tests</h3>
+
+<div class="row mb-4">
+<div class="col-md-4">
+  <div class="card text-white bg-success shadow-lg">
+    <div class="card-body text-center">
+      <h5 class="card-title">Débutant</h5>
+      <p class="display-4">{{ niveauStats.debutant }}</p>
+      <p class="card-text">Tests au niveau débutant</p>
+      <p><strong>{{ niveauStats.debutantPct }}%</strong> du total 📈</p>
     </div>
-  <!-- Titre Statistiques -->
-<h3 class="mt-4 mb-3 text-center">📊 Statistiques</h3>
-    <!-- Affichage des statistiques des niveaux sous forme de cartes -->
-    <div class="row mb-4">
-      <div class="col-md-4">
-        <div class="card text-white bg-success shadow-lg">
-          <div class="card-body text-center">
-            <h5 class="card-title">Débutant</h5>
-            <p class="display-4">{{ niveauStats.debutant }}</p>
-            <p class="card-text">Tests au niveau débutant</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card text-white bg-warning shadow-lg">
-          <div class="card-body text-center">
-            <h5 class="card-title">Intermédiaire</h5>
-            <p class="display-4">{{ niveauStats.intermediaire }}</p>
-            <p class="card-text">Tests au niveau intermédiaire</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card text-white bg-danger shadow-lg">
-          <div class="card-body text-center">
-            <h5 class="card-title">Avancé</h5>
-            <p class="display-4">{{ niveauStats.avance }}</p>
-            <p class="card-text">Tests au niveau avancé</p>
-          </div>
-        </div>
-      </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="card text-white bg-warning shadow-lg">
+    <div class="card-body text-center">
+      <h5 class="card-title">Intermédiaire</h5>
+      <p class="display-4">{{ niveauStats.intermediaire }}</p>
+      <p class="card-text">Tests au niveau intermédiaire</p>
+      <p><strong>{{ niveauStats.intermediairePct }}%</strong> du total 📊</p>
     </div>
-  <!-- Barre de recherche avec sélection du type -->
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="card text-white bg-danger shadow-lg">
+    <div class="card-body text-center">
+      <h5 class="card-title">Avancé</h5>
+      <p class="display-4">{{ niveauStats.avance }}</p>
+      <p class="card-text">Tests au niveau avancé</p>
+      <p><strong>{{ niveauStats.avancePct }}%</strong> du total 🚀</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Barre de recherche avec sélection du type -->
 <div class="form-group d-flex align-items-center mb-3">
-    <select class="form-control w-auto me-2" [(ngModel)]="searchType">
-      <option value="id">ID</option>
-      <option value="titre">Titre</option>
-    </select>
-    <input 
-      type="text" 
-      class="form-control" 
-      placeholder="Rechercher un test" 
-      [(ngModel)]="searchTerm" 
-      (input)="searchTests()" 
-    />
-  </div>
-  
-  
-    <!-- Table des tests -->
-    <table class="table table-hover mt-3">
-      <thead class="thead-dark">
-        <tr>
-          <th>ID</th>
-          <th>Titre</th>
-          <th>Description</th>
-          <th>Durée</th>
-          <th>Niveau</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let test of filteredTests">
-          <td>{{ test.id }}</td>
-          <td>{{ test.titre }}</td>
-          <td>{{ test.description }}</td>
-          <td>{{ test.duration }} minutes</td>
-          <td>
-            <span [ngClass]="{
-              'badge bg-success': test.niveau === 'Débutant',
-              'badge bg-warning text-dark': test.niveau === 'Intermédiaire',
-              'badge bg-danger': test.niveau === 'Avancé'
-            }">
-              {{ test.niveau }}
-            </span>
-          </td>
-          <td>
-            <button class="btn btn-outline-info btn-sm" (click)="viewTest(test.id)">👁 Voir</button>
-            <button class="btn btn-outline-primary btn-sm" (click)="editTest(test.id)">✏ Modifier</button>
-            <button class="btn btn-outline-danger btn-sm" (click)="deleteTest(test.id)">❌ Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <select class="form-control w-auto me-2" [(ngModel)]="searchType">
+    <option value="id">ID</option>
+    <option value="titre">Titre</option>
+  </select>
+  <input 
+    type="text" 
+    class="form-control" 
+    placeholder="Rechercher un test" 
+    [(ngModel)]="searchTerm" 
+    (input)="searchTests()" 
+  />
+</div>
+
+
+  <!-- Table des tests -->
+  <table class="table table-hover mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Durée</th>
+        <th>Niveau</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let test of filteredTests | paginate: { itemsPerPage: pageSize, currentPage: page }">
+        <td>{{ test.id }}</td>
+        <td>{{ test.titre }}</td>
+        <td>{{ test.description }}</td>
+        <td>{{ test.duration }} minutes</td>
+        <td>
+          <span [ngClass]="{
+            'badge bg-success': test.niveau === 'Débutant',
+            'badge bg-warning text-dark': test.niveau === 'Intermédiaire',
+            'badge bg-danger': test.niveau === 'Avancé'
+          }">
+            {{ test.niveau }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-outline-info btn-sm" (click)="viewTest(test.id)">👁 Voir</button>
+          <button class="btn btn-outline-primary btn-sm" (click)="editTest(test.id)">✏ Modifier</button>
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteTest(test.id)">❌ Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination -->
+  <div class="pagination-container">
+  <pagination-controls 
+  previousLabel="Précédent" 
+  nextLabel="Suivant"
+  (pageChange)="page = $event">
+</pagination-controls>
+
+</div>

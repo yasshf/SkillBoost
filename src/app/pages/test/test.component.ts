@@ -34,8 +34,9 @@ export class TestComponent implements OnInit {
   }
 
   calculateNiveauStats() {
+    const totalTests = this.tests.length;
     this.niveauStats = { debutant: 0, intermediaire: 0, avance: 0 };
-
+  
     this.tests.forEach(test => {
       if (test.niveau === 'Débutant') {
         this.niveauStats.debutant++;
@@ -45,7 +46,13 @@ export class TestComponent implements OnInit {
         this.niveauStats.avance++;
       }
     });
+  
+    // Ajout des pourcentages
+    this.niveauStats.debutantPct = totalTests ? (this.niveauStats.debutant / totalTests * 100).toFixed(1) : 0;
+    this.niveauStats.intermediairePct = totalTests ? (this.niveauStats.intermediaire / totalTests * 100).toFixed(1) : 0;
+    this.niveauStats.avancePct = totalTests ? (this.niveauStats.avance / totalTests * 100).toFixed(1) : 0;
   }
+  
 
   searchTests() {
     if (!this.searchTerm.trim()) {
@@ -93,5 +100,8 @@ sortByTitle() {
     return this.sortAscending ? titleA.localeCompare(titleB) : titleB.localeCompare(titleA);
   });
 }
+// Pagination
+page: number = 1;
+pageSize: number = 4; // Nombre d'éléments par page
 
 }

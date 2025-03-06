@@ -21,4 +21,9 @@
     padding: 5px 10px;
     cursor: pointer;
   }
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
   

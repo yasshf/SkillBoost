@@ -11,6 +11,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { FixedPluginModule } from './shared/fixedplugin/fixedplugin.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 // Import your components
 import { AppComponent } from './app.component';
@@ -49,6 +50,7 @@ import { EditCertificatComponent } from './pages/edit-certificat/edit-certificat
     ReactiveFormsModule,
     FormsModule,
     BrowserModule,
+    NgxPaginationModule,
     HttpClientModule, // HTTP requests
     ToastrModule.forRoot() // For Toastr notifications
   ],
