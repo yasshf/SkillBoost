@@ -1,0 +1,50 @@
+<!-- chatbot.component.html -->
+<div class="chatbot-wrapper">
+    <!-- Chat toggle button -->
+    <button class="chat-toggle-button" (click)="toggleChat()">
+      <span *ngIf="!isChatVisible">Open Chat</span>
+      <span *ngIf="isChatVisible">Close Chat</span>
+    </button>
+  
+    <!-- Chat container (conditionally visible) -->
+    <div class="chat-container" [ngClass]="{'chat-visible': isChatVisible}">
+      <div class="chat-header">
+        <h3>Chat Assistant</h3>
+        <button class="close-button" (click)="toggleChat()">×</button>
+      </div>
+      
+      <div class="chat-messages">
+        <div *ngFor="let message of messages" 
+             [ngClass]="{'message-bubble': true, 'user-message': message.isUser, 'bot-message': !message.isUser}">
+          <div class="message-content">
+            {{ message.content }}
+          </div>
+          <div class="message-timestamp">
+            {{ message.timestamp | date:'shortTime' }}
+          </div>
+        </div>
+        
+        <div *ngIf="isLoading" class="loading-indicator">
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chat-input">
+        <input 
+          type="text" 
+          [formControl]="messageInput" 
+          placeholder="Type your message..." 
+          (keyup.enter)="sendMessage()">
+        <button 
+          class="send-button"
+          [disabled]="messageInput.invalid || isLoading" 
+          (click)="sendMessage()">
+          Send
+        </button>
+      </div>
+    </div>
+  </div>

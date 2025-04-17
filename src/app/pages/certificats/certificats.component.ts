@@ -1,9 +1,10 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CertificatService } from '../../services/certificat.service';
+import { EmailService } from 'app/services/email.service';
 import { Certificat } from '../../models/certificat.model';
 import { jsPDF } from 'jspdf';  // Importation de jsPDF
-
+import { QRCodeModule } from 'angularx-qrcode';
 @Component({
   selector: 'app-certificats',
   templateUrl: './certificats.component.html',
@@ -13,8 +14,9 @@ export class CertificatsComponent implements OnInit {
   certificats: Certificat[] = [];  // Liste complète des certificats
   searchNom: string = '';  // Valeur du champ de recherche
   filteredCertificats: Certificat[] = [];  // Liste filtrée des certificats
-
-  constructor(private certificatService: CertificatService, private router: Router) {}
+  constructor(private certificatService: CertificatService, private router: Router, private emailService: EmailService) {}
+  showEmailDialog = false;
+  currentCertificat: Certificat | null = null;
 
   ngOnInit(): void {
     this.loadCertificats();  // Charger les certificats dès que le composant est initialisé
@@ -127,6 +129,136 @@ export class CertificatsComponent implements OnInit {
 page: number = 1;
 pageSize: number = 4; // Nombre d'éléments par page
 
+// Méthode pour générer le QR code (par exemple, pour un certificat spécifique)
+generateQRCode(certificat: Certificat): string {
+  // Vous pouvez choisir ici ce que vous voulez encoder dans le QR code
+  const qrData = `Certificat: ${certificat.nom} | Score: ${certificat.scoreObtenu}`;
+  return qrData;
+}
+
+/*sendCertificatByEmail(certificat: Certificat): void {
+  const doc = new jsPDF();
+
+  // Ton code PDF comme dans generatePdf(certificat)
+  doc.setFontSize(22);
+  doc.text('Certificat de Réussite', 105, 30, { align: 'center' });
+  // ... (autres textes et décorations)
+  const formattedDate = new Date(certificat.dateObtention).toLocaleDateString('fr-FR');
+  doc.setFontSize(14);
+  doc.text(`Nom : ${certificat.nom}`, 20, 60);
+  doc.text(`Date d'obtention : ${formattedDate}`, 20, 70);
+  doc.text(`Score obtenu : ${certificat.scoreObtenu}`, 20, 80);
+  doc.text(`Score minimum : ${certificat.scoreMin}`, 20, 90);
+  doc.text(`Utilisateur : ${certificat.utilisateur?.id || 'Non défini'}`, 20, 100);
+  doc.text(`Test : ${certificat.test?.titre || 'Non défini'}`, 20, 110);
+
+  // Convertir le PDF en blob
+  const pdfBlob = doc.output('blob');
+
+  // Envoyer via le service
+  this.emailService.sendCertificatEmailWithAttachment(
+    'ahmed.drid4070@gmail.com',
+    'Votre certificat',
+    'Félicitations, voici votre certificat !',
+    pdfBlob,
+    `certificat_${certificat.nom}.pdf`
+  ).subscribe(
+    () => {
+      console.log('Email envoyé avec succès !');
+      alert('Email envoyé avec succès !');
+    },
+    (error) => {
+      console.error('Erreur lors de l\'envoi de l\'email :', error);
+      alert('Erreur lors de l\'envoi de l\'email');
+    }
+  );
+}*/
+
+sendCertificatByEmail(certificat: Certificat): void {
+  this.currentCertificat = certificat;
+  this.showEmailDialog = true;
+}
+
+handleSendEmail(data: {email: string, file: File | null}): void {
+  const email = data.email;
+  const selectedFile = data.file;
+  const certificat = this.currentCertificat;
   
+  if (!certificat) return;
+
+  if (selectedFile) {
+    // Si l'utilisateur a sélectionné un fichier, l'utiliser
+    this.sendExistingFile(email, selectedFile, certificat);
+  } else {
+    // Sinon, générer un nouveau PDF
+    this.generateAndSendPdf(email, certificat);
+  }
+}
+
+private sendExistingFile(email: string, file: File, certificat: Certificat): void {
+  // Convertir le fichier sélectionné en blob si nécessaire
+  const reader = new FileReader();
+  reader.onload = () => {
+    const fileBlob = new Blob([reader.result as ArrayBuffer], { type: file.type });
+    
+    this.emailService.sendCertificatEmailWithAttachment(
+      email,
+      'Votre certificat',
+      'Félicitations, voici votre certificat !',
+      fileBlob,
+      file.name
+    ).subscribe(
+      () => {
+        console.log('Email envoyé avec succès !');
+        alert('Email envoyé avec succès !');
+      },
+      (error) => {
+        console.error('Erreur lors de l\'envoi de l\'email :', error);
+        alert('Erreur lors de l\'envoi de l\'email');
+      }
+    );
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+private generateAndSendPdf(email: string, certificat: Certificat): void {
+  const doc = new jsPDF();
+
+  // Génération du PDF
+  doc.setFontSize(22);
+  doc.text('Certificat de Réussite', 105, 30, { align: 'center' });
   
+  const formattedDate = new Date(certificat.dateObtention).toLocaleDateString('fr-FR');
+  doc.setFontSize(14);
+  doc.text(`Nom : ${certificat.nom}`, 20, 60);
+  doc.text(`Date d'obtention : ${formattedDate}`, 20, 70);
+  doc.text(`Score obtenu : ${certificat.scoreObtenu}`, 20, 80);
+  doc.text(`Score minimum : ${certificat.scoreMin}`, 20, 90);
+  doc.text(`Utilisateur : ${certificat.utilisateur?.id || 'Non défini'}`, 20, 100);
+  doc.text(`Test : ${certificat.test?.titre || 'Non défini'}`, 20, 110);
+
+  // Convertir le PDF en blob
+  const pdfBlob = doc.output('blob');
+
+  // Envoyer via le service
+  this.emailService.sendCertificatEmailWithAttachment(
+    email,
+    'Votre certificat',
+    'Félicitations, voici votre certificat !',
+    pdfBlob,
+    `certificat_${certificat.nom}.pdf`
+  ).subscribe(
+    () => {
+      console.log('Email envoyé avec succès !');
+      alert('Email envoyé avec succès !');
+    },
+    (error) => {
+      console.error('Erreur lors de l\'envoi de l\'email :', error);
+      alert('Erreur lors de l\'envoi de l\'email');
+    }
+  );
+}
+
+
+
 }

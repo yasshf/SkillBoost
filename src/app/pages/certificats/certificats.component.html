@@ -1,7 +1,6 @@
 <div class="container">
   <h2 class="title">Liste des Certificats</h2>
 
-
   <!-- Barre de recherche avec icône -->
   <div class="form-group mb-4 d-flex align-items-center">
     <label for="searchNom" class="mr-2">Rechercher par nom</label>
@@ -24,7 +23,6 @@
     </div>
   </div>
 
-  
   <table class="table table-bordered mt-3">
     <thead class="table-dark">
       <tr>
@@ -34,6 +32,7 @@
         <th>Score minimum</th>
         <th>Utilisateur</th>
         <th>Test</th>
+        <th>QR Code</th> <!-- Colonne QR Code -->
         <th>Actions</th>
       </tr>
     </thead>
@@ -45,6 +44,13 @@
         <td>{{ certificat.scoreMin }}</td>
         <td>{{ certificat.utilisateur?.id || 'Non défini' }}</td>
         <td>{{ certificat.test?.titre || 'Non défini' }}</td>
+        
+        <!-- QR Code dans une cellule -->
+        <td>
+          <qrcode [qrdata]="generateQRCode(certificat)" [size]="64" [level]="'M'"></qrcode> <!-- Taille réduite -->
+        </td>
+
+        <!-- Actions -->
         <td>
           <button class="btn btn-warning btn-sm" (click)="editCertificat(certificat.id)">
             Modifier
@@ -55,6 +61,10 @@
           <button class="btn btn-primary btn-sm" (click)="generatePdf(certificat)">
             Télécharger PDF
           </button>
+          <button class="btn btn-info btn-sm" (click)="sendCertificatByEmail(certificat)">
+            Envoyer par Email
+          </button>
+          
         </td>
       </tr>
     </tbody>
@@ -64,6 +74,7 @@
   <div class="text-center mt-4">
     <a routerLink="/add-certificat" class="btn btn-success">Ajouter un Certificat</a>
   </div>
+
   <!-- Pagination -->
   <div class="pagination-container">
     <pagination-controls 
@@ -72,3 +83,11 @@
     (pageChange)="page = $event">
   </pagination-controls>
 </div>
+
+
+<app-email-dialog 
+  [(visible)]="showEmailDialog"
+  (sendEmail)="handleSendEmail($event)">
+</app-email-dialog>
+
+

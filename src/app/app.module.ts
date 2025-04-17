@@ -12,6 +12,7 @@ import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { FixedPluginModule } from './shared/fixedplugin/fixedplugin.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { QRCodeModule } from 'angularx-qrcode';
 
 // Import your components
 import { AppComponent } from './app.component';
@@ -27,6 +28,8 @@ import { AddCertificatComponent } from './pages/add-certificat/add-certificat.co
 import { CertificatService } from './services/certificat.service';
 import { UtilisateurService } from './services/utilisateur.service';
 import { EditCertificatComponent } from './pages/edit-certificat/edit-certificat.component';
+import { ChatbotComponent } from './pages/chatbot/chatbot.component';
+import { EmailDialogComponent } from './pages/certificats/email-dialog/email-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { EditCertificatComponent } from './pages/edit-certificat/edit-certificat
     TestEditComponent,
     TestAddComponent,
     AddCertificatComponent,
-    EditCertificatComponent
+    EditCertificatComponent,
+    ChatbotComponent,
+    EmailDialogComponent
   ],
   imports: [
     BrowserAnimationsModule, // Necessary for animation support
@@ -51,6 +56,7 @@ import { EditCertificatComponent } from './pages/edit-certificat/edit-certificat
     FormsModule,
     BrowserModule,
     NgxPaginationModule,
+    QRCodeModule,
     HttpClientModule, // HTTP requests
     ToastrModule.forRoot() // For Toastr notifications
   ],
