@@ -34,5 +34,5 @@ The platform connects **instructors**, **students**, and **administrators** to m
 
 ### 📁 Clone the repository
 ```bash
-git clone https://github.com/your-username/skillboost.git
+git clone https://github.com/yasshf/skillboost.git
 cd skillboost
